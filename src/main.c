@@ -47,8 +47,8 @@ int main(void)
   {
       /* Send note on (middle c [key number 60], velocity of 99), channel 1 */
       USART_SendData(USART2, 0x90);
-      USART_SendData(USART2, 60);
-      USART_SendData(USART2, 99);
+      USART_SendData(USART2, 0);
+      USART_SendData(USART2, 0);
     
       /* Insert delay */
       Delay(0xFFFFFF);
