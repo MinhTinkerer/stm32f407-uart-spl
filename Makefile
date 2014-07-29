@@ -28,8 +28,6 @@ OBJS = $(SRCS:.c=.o)
 OCD	= sudo openocd \
 		-f /usr/share/openocd/scripts/board/stm32f4discovery.cfg
 
-FLASH_WRITE_ADDR=0x08000000
-
 BIN=$(PROJ_NAME).elf
 
 ###################################################
