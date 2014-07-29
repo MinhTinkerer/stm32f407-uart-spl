@@ -6,18 +6,12 @@ SRCS = main.c stm32f4xx_it.c system_stm32f4xx.c
 
 PROJ_NAME=main
 
-# that's it, no need to change anything below this line!
-
-###################################################
-
 CC=arm-none-eabi-gcc
 OBJCOPY=arm-none-eabi-objcopy
 
 CFLAGS  = -g -O2 -Wall -Tstm32_flash.ld 
 CFLAGS += -mlittle-endian -mthumb -mcpu=cortex-m4 -mthumb-interwork
 CFLAGS += -mfloat-abi=hard -mfpu=fpv4-sp-d16
-
-###################################################
 
 vpath %.c src
 vpath %.a lib
@@ -31,6 +25,13 @@ SRCS += lib/startup_stm32f4xx.s # add startup file to build
 
 OBJS = $(SRCS:.c=.o)
 
+OCD	= sudo openocd \
+		-f /usr/share/openocd/scripts/board/stm32f4discovery.cfg
+
+FLASH_WRITE_ADDR=0x08000000
+
+BIN=$(PROJ_NAME).elf
+
 ###################################################
 
 .PHONY: lib proj
@@ -40,15 +41,19 @@ all: lib proj
 lib:
 	$(MAKE) -C lib
 
-proj: 	$(PROJ_NAME).elf
+proj: $(BIN)
 
-$(PROJ_NAME).elf: $(SRCS)
+$(BIN): $(SRCS)
 	$(CC) $(CFLAGS) $^ -o $@ -Llib -lstm32f4
-	$(OBJCOPY) -O ihex $(PROJ_NAME).elf $(PROJ_NAME).hex
-	$(OBJCOPY) -O binary $(PROJ_NAME).elf $(PROJ_NAME).bin
 
 clean:
 	$(MAKE) -C lib clean
-	rm -f $(PROJ_NAME).elf
-	rm -f $(PROJ_NAME).hex
-	rm -f $(PROJ_NAME).bin
+	rm -f $(BIN)
+
+flash: $(BIN)
+	$(OCD) -c init \
+		-c "reset halt" \
+	    -c "flash write_image erase $(BIN) $(FLASH_WRITE_ADDR)" \
+		-c "reset run" \
+	    -c shutdown
+
