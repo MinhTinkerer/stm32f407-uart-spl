@@ -20,6 +20,7 @@
   */ 
 
 /* Includes ------------------------------------------------------------------*/
+#include <stdlib.h> 
 #include "stm32f4_discovery.h"
 #include "stm32f4xx_conf.h" // again, added because ST didn't put it here ?
 
@@ -43,29 +44,34 @@ int main(void)
     /* Enable USART For Tx */
     USART2_Enable_Tx();
 
+    /* we have to do this */
+
   while (1)
   {
-      /* Send note on (middle c [key number 60], velocity of 99), channel 1 */
+      uint8_t note = (uint8_t)(127 * drand48());
+      uint8_t vel  = (uint8_t)(127 * drand48());
+      uint32_t delay = (uint32_t)((0xffffff) * drand48()) / 100;
+      /* Send note on channel 1 */
       while(!(USART2->SR & USART_SR_TC));
-      USART_SendData(USART2, 0x90);
+      USART_SendData(USART2, 0x99);
       while(!(USART2->SR & USART_SR_TC));
-      USART_SendData(USART2, 60);
+      USART_SendData(USART2, note);
       while(!(USART2->SR & USART_SR_TC));
-      USART_SendData(USART2, 99);
+      USART_SendData(USART2, vel);
     
       /* Insert delay */
-      Delay(0xFFFFFF);
+      Delay(delay);
 
       /* Send note off */
       while(!(USART2->SR & USART_SR_TC));
-      USART_SendData(USART2, 0x80);
+      USART_SendData(USART2, 0x89);
       while(!(USART2->SR & USART_SR_TC));
-      USART_SendData(USART2, 60);
+      USART_SendData(USART2, note);
       while(!(USART2->SR & USART_SR_TC));
       USART_SendData(USART2, 0);
 
       /* Insert delay */
-      Delay(0xFFFFFF);
+      Delay(delay);
   }
 }
 

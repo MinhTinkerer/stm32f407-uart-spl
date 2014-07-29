@@ -53,7 +53,10 @@ clean:
 flash: $(BIN)
 	$(OCD) -c init \
 		-c "reset halt" \
-	    -c "flash write_image erase $(BIN) $(FLASH_WRITE_ADDR)" \
+	    -c "flash write_image erase $(BIN)" \
 		-c "reset run" \
 	    -c shutdown
+
+reset:
+	$(OCD) -c init -c "reset run" -c shutdown
 

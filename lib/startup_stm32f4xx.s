@@ -97,7 +97,13 @@ LoopFillZerobss:
   bl  SystemInit   
 /* Call static constructors, we shouldn't need this unless we use c++*/
     bl __libc_init_array
-/* Call the application's entry point.*/
+/* Enable FPU */
+    ldr.w r0, =0xe000ed88
+    ldr r1, [r0]
+    orr r1, r1, #(0xf << 20)
+    str r1, [r0]
+    dsb
+    isb/* Call the application's entry point.*/
   bl  main
   bx  lr    
 .size  Reset_Handler, .-Reset_Handler
