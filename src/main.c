@@ -46,16 +46,22 @@ int main(void)
   while (1)
   {
       /* Send note on (middle c [key number 60], velocity of 99), channel 1 */
+      while(!(USART2->SR & USART_SR_TC));
       USART_SendData(USART2, 0x90);
-      USART_SendData(USART2, 0);
-      USART_SendData(USART2, 0);
+      while(!(USART2->SR & USART_SR_TC));
+      USART_SendData(USART2, 60);
+      while(!(USART2->SR & USART_SR_TC));
+      USART_SendData(USART2, 99);
     
       /* Insert delay */
       Delay(0xFFFFFF);
 
       /* Send note off */
+      while(!(USART2->SR & USART_SR_TC));
       USART_SendData(USART2, 0x80);
+      while(!(USART2->SR & USART_SR_TC));
       USART_SendData(USART2, 60);
+      while(!(USART2->SR & USART_SR_TC));
       USART_SendData(USART2, 0);
 
       /* Insert delay */
