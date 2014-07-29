@@ -5015,15 +5015,17 @@ GPIO_ReadOutputData	lib/src/peripherals/stm32f4xx_gpio.c	/^uint16_t GPIO_ReadOut
 GPIO_ReadOutputDataBit	lib/src/peripherals/stm32f4xx_gpio.c	/^uint8_t GPIO_ReadOutputDataBit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)$/;"	f
 GPIO_ResetBits	lib/src/peripherals/stm32f4xx_gpio.c	/^void GPIO_ResetBits(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)$/;"	f
 GPIO_SetBits	lib/src/peripherals/stm32f4xx_gpio.c	/^void GPIO_SetBits(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)$/;"	f
+GPIO_Setup_Trig	src/main.c	/^void GPIO_Setup_Trig(void)$/;"	f
 GPIO_Speed	lib/inc/peripherals/stm32f4xx_gpio.h	/^  GPIOSpeed_TypeDef GPIO_Speed;   \/*!< Specifies the speed for the selected pins.$/;"	m	struct:__anon43
 GPIO_Speed_100MHz	lib/inc/peripherals/stm32f4xx_gpio.h	/^  GPIO_Speed_100MHz = 0x03  \/*!< High speed on 30 pF (80 MHz Output max speed on 15 pF) *\/$/;"	e	enum:__anon40
 GPIO_Speed_25MHz	lib/inc/peripherals/stm32f4xx_gpio.h	/^  GPIO_Speed_25MHz  = 0x01, \/*!< Medium speed *\/$/;"	e	enum:__anon40
 GPIO_Speed_2MHz	lib/inc/peripherals/stm32f4xx_gpio.h	/^  GPIO_Speed_2MHz   = 0x00, \/*!< Low speed *\/$/;"	e	enum:__anon40
 GPIO_Speed_50MHz	lib/inc/peripherals/stm32f4xx_gpio.h	/^  GPIO_Speed_50MHz  = 0x02, \/*!< Fast speed *\/$/;"	e	enum:__anon40
 GPIO_StructInit	lib/src/peripherals/stm32f4xx_gpio.c	/^void GPIO_StructInit(GPIO_InitTypeDef* GPIO_InitStruct)$/;"	f
+GPIO_TRIG_InitStruct	src/main.c	/^GPIO_InitTypeDef    GPIO_TRIG_InitStruct;$/;"	v
 GPIO_ToggleBits	lib/src/peripherals/stm32f4xx_gpio.c	/^void GPIO_ToggleBits(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)$/;"	f
 GPIO_TypeDef	lib/inc/stm32f4xx.h	/^} GPIO_TypeDef;$/;"	t	typeref:struct:__anon175
-GPIO_USART_InitStruct	src/main.c	/^GPIO_InitTypeDef  GPIO_USART_InitStruct;$/;"	v
+GPIO_USART_InitStruct	src/main.c	/^GPIO_InitTypeDef    GPIO_USART_InitStruct;$/;"	v
 GPIO_Write	lib/src/peripherals/stm32f4xx_gpio.c	/^void GPIO_Write(GPIO_TypeDef* GPIOx, uint16_t PortVal)$/;"	f
 GPIO_WriteBit	lib/src/peripherals/stm32f4xx_gpio.c	/^void GPIO_WriteBit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, BitAction BitVal)$/;"	f
 GTPR	lib/inc/stm32f4xx.h	/^  __IO uint16_t GTPR;       \/*!< USART Guard time and prescaler register, Address offset: 0x18 *\/$/;"	m	struct:__anon185
@@ -9479,7 +9481,7 @@ USART_IT_RXNE	lib/inc/peripherals/stm32f4xx_usart.h	240;"	d
 USART_IT_TC	lib/inc/peripherals/stm32f4xx_usart.h	239;"	d
 USART_IT_TXE	lib/inc/peripherals/stm32f4xx_usart.h	238;"	d
 USART_Init	lib/src/peripherals/stm32f4xx_usart.c	/^void USART_Init(USART_TypeDef* USARTx, USART_InitTypeDef* USART_InitStruct)$/;"	f
-USART_InitStruct	src/main.c	/^USART_InitTypeDef  USART_InitStruct;$/;"	v
+USART_InitStruct	src/main.c	/^USART_InitTypeDef   USART_InitStruct;$/;"	v
 USART_InitTypeDef	lib/inc/peripherals/stm32f4xx_usart.h	/^} USART_InitTypeDef;$/;"	t	typeref:struct:__anon15
 USART_IrDACmd	lib/src/peripherals/stm32f4xx_usart.c	/^void USART_IrDACmd(USART_TypeDef* USARTx, FunctionalState NewState)$/;"	f
 USART_IrDAConfig	lib/src/peripherals/stm32f4xx_usart.c	/^void USART_IrDAConfig(USART_TypeDef* USARTx, uint16_t USART_IrDAMode)$/;"	f

@@ -25,11 +25,13 @@
 
 #define MIDI_BAUD_RATE 31250
 
-GPIO_InitTypeDef  GPIO_USART_InitStruct;
-USART_InitTypeDef  USART_InitStruct;
+GPIO_InitTypeDef    GPIO_TRIG_InitStruct;
+GPIO_InitTypeDef    GPIO_USART_InitStruct;
+USART_InitTypeDef   USART_InitStruct;
 
 void Delay(__IO uint32_t nCount);
 void USART2_Enable_Tx(void);
+void GPIO_Setup_Trig(void);
 
 int main(void)
 {
@@ -39,27 +41,26 @@ int main(void)
        To reconfigure the default setting of SystemInit() function, refer to
         system_stm32f4xx.c file
      */
+
     
     /* Enable USART For Tx */
     USART2_Enable_Tx();
 
+    /* Setup GPIO Trigger */
+    GPIO_Setup_Trig();
+
   while (1)
   {
+      GPIO_SetBits(GPIOA,GPIO_Pin_1);
+      Delay(0xf);
+      GPIO_ResetBits(GPIOA,GPIO_Pin_1);
       /* Send note on (middle c [key number 60], velocity of 99), channel 1 */
+      while(!(USART2->SR & USART_SR_TC));
       USART_SendData(USART2, 0x90);
+      while(!(USART2->SR & USART_SR_TC));
       USART_SendData(USART2, 0);
+      while(!(USART2->SR & USART_SR_TC));
       USART_SendData(USART2, 0);
-    
-      /* Insert delay */
-      Delay(0xFFFFFF);
-
-      /* Send note off */
-      USART_SendData(USART2, 0x80);
-      USART_SendData(USART2, 60);
-      USART_SendData(USART2, 0);
-
-      /* Insert delay */
-      Delay(0xFFFFFF);
   }
 }
 
@@ -105,8 +106,15 @@ void USART2_Enable_Tx(void)
     USART_Cmd(USART2, ENABLE);
 }
 
-
-
+void GPIO_Setup_Trig(void)
+{
+    GPIO_TRIG_InitStruct.GPIO_Mode = GPIO_Mode_OUT;
+    GPIO_TRIG_InitStruct.GPIO_PuPd = GPIO_PuPd_NOPULL;
+    GPIO_TRIG_InitStruct.GPIO_OType = GPIO_OType_PP;
+    GPIO_TRIG_InitStruct.GPIO_Speed = GPIO_Speed_100MHz;
+    GPIO_TRIG_InitStruct.GPIO_Pin = GPIO_Pin_1;
+    GPIO_Init(GPIOA, &GPIO_TRIG_InitStruct);
+}
 
 
 #ifdef  USE_FULL_ASSERT
